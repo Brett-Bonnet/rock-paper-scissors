@@ -1,1 +1,182 @@
 
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Function scope example</title>
+</head>
+<style>
+  input { 
+      font-size: 2em;
+      margin: 10px 1px 0;
+     }
+	</style> 
+
+<body>
+  <button id="rock" onClick="playerChoice()">Rock</button>
+  <button id="paper" onClick="playerChoice()">Paper</button>
+  <button id="scissors" onClick="playerChoice()">Scissors</button>
+  <div id="results"></p>
+  
+  <script>
+ 
+ let playerWins = 0;
+ let computerWins = 0;
+ let roundCount = 0;
+ let player = "";
+ let computer = "";
+ const div = document.querySelector('#results');
+ let p;
+ 
+function playerChoice() {
+  return event.srcElement.id;
+ }
+ 
+function resetGame() {
+ playerWins = 0;
+ computerWins = 0;
+ roundCount = 0;
+ }
+function youWin () {
+ p = document.createElement("p");
+ p.textContent = `You won the game! Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ resetGame();
+ }
+function youLose () {
+ p = document.createElement("p");
+ p.textContent = `You lost the game. Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ resetGame();
+ }
+ 
+ function youTied () {
+ p = document.createElement("p");
+ p.textContent = `The game was a tie. Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ resetGame();
+ }
+ 
+ const computerPlay = () => {
+  var choices = ['Rock', 'Paper', 'Scissors'];
+  var compChoice = choices[(Math.random() * choices.length) | 0];
+  return compChoice
+  }
+ 
+ 
+function playRound (playerSelection, computerSelection) { 
+ playerSelection = playerChoice();
+ computerSelection = computerPlay();
+
+    if (playerSelection === "rock") {
+       if (computerSelection === "Rock") {
+	         return "tie"
+			 }
+		   else if (computerSelection === "Paper") {
+		     return "lose"
+		   }
+		   else if (computerSelection === "Scissors") {
+		     return "win"
+		   }
+		 
+		}
+    else if (playerSelection === "paper")  {
+	      if (computerSelection === "Rock") {
+	         return "win"
+			 }
+		   else if (computerSelection === "Paper") {
+		     return "tie"
+		   }
+		   else if (computerSelection === "Scissors") {
+		     return "lose"
+		   }
+		
+		}
+	else if (playerSelection === "scissors")  {
+	      if (computerSelection === "Rock") {
+	         return "lose"
+			 }
+		   else if (computerSelection === "Paper") {
+		     return "win"
+		   }
+		   else if (computerSelection === "Scissors") {
+		     return "tie"
+		}
+	  
+	}	
+}
+
+function playGame() {
+ playerSelection = playerChoice();
+ computerSelection = computerPlay();
+ 
+
+if (roundCount < 4) {
+
+if (playRound(playerSelection, computerSelection) === "win") {
+ playerWins++
+ p = document.createElement("p");
+ p.textContent = `Round ${roundCount + 1}: You win this round! Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ roundCount++
+      }
+else if (playRound(playerSelection, computerSelection) === "lose") {
+ computerWins++
+ p = document.createElement("p");
+ p.textContent = `Round ${roundCount + 1}: You lose this round. Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ roundCount++
+      }
+else if (playRound(playerSelection, computerSelection) === "tie"){
+ p = document.createElement("p");
+ p.textContent = `Round ${roundCount + 1}: It was a tie! Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ roundCount++
+      }
+}
+
+else  {
+
+if (playRound(playerSelection, computerSelection) === "win") {
+ playerWins++
+ p = document.createElement("p");
+ p.textContent = `Round ${roundCount + 1}: You win this round! Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+  
+  if (playerWins > computerWins) {youWin()} 
+  else if (playerWins < computerWins) {youLose()}
+  else {youTied()}
+ 
+ resetGame();
+      }
+else if (playRound(playerSelection, computerSelection) === "lose") {
+ computerWins++
+ p = document.createElement("p");
+ p.textContent = `Round ${roundCount + 1}: You lose this round. Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ if (playerWins > computerWins) {youWin()} 
+  else if (playerWins < computerWins) {youLose()}
+  else {youTied()}
+ 
+ resetGame();
+ 
+      }
+else if (playRound(playerSelection, computerSelection) === "tie"){
+ p = document.createElement("p");
+ p.textContent = `Round ${roundCount + 1}: It was a tie! Score = You: ${playerWins} Computer: ${computerWins}`
+ div.appendChild(p);
+ if (playerWins > computerWins) {youWin()} 
+  else if (playerWins < computerWins) {youLose()}
+  else {youTied()}
+ 
+ resetGame();
+ 
+      }
+   }
+}
+	
+const btn = document.querySelectorAll('button');
+btn.forEach(button => button.addEventListener('click', playGame));	
+     
+  </script>
+
+</body></html>
